@@ -1,6 +1,6 @@
-# Hệ thống Tài liệu Toàn bộ API Tammi (Viettel Messenger)
+# TammiApi - Hệ thống Tài liệu & Thư viện Code Toàn bộ API Tammi (Viettel Messenger)
 
-Thư mục này tổng hợp toàn bộ các API của nền tảng **Tammi** (ứng dụng nhắn tin của Viettel, `tammi.vn`), được phân tích và trích xuất từ hệ thống `hermes-tammi-plugin`.
+Kho lưu trữ này tổng hợp toàn bộ các API của nền tảng **Tammi** (ứng dụng nhắn tin của Viettel, `tammi.vn`), bao gồm tài liệu kỹ thuật chi tiết và bộ mã nguồn Client SDK hoàn chỉnh (Node.js & Python).
 
 ---
 
