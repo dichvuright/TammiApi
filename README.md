@@ -10,27 +10,27 @@ Kiến trúc kết nối và tương tác với Tammi gồm 3 tầng API chính:
 
 ```mermaid
 flowchart TD
-    subgraph ClientLayer [Tầng Ứng dụng & Bot]
-        ClientApp["Hermes Agent / Bot / Khách hàng"]
+    subgraph ClientLayer ["Tầng Ứng Dụng và Bot"]
+        ClientApp["Hermes Agent / Bot / Client"]
     end
 
-    subgraph BridgeLayer [Tầng Local Bridge (Node.js)]
-        LocalBridge["Tammi Bridge Server\n(http://127.0.0.1:8788)"]
-        ZimSDK["ZEGO ZIM SDK\n(Phiên bản 3.2.0.vtt Viettel)"]
-        CredStore["Credential Store\n(credentials.json)"]
+    subgraph BridgeLayer ["Tầng Local Bridge - Node.js"]
+        LocalBridge["Tammi Bridge Server<br/>http://127.0.0.1:8788"]
+        ZimSDK["ZEGO ZIM SDK<br/>Phiên bản 3.2.0.vtt Viettel"]
+        CredStore["Credential Store<br/>credentials.json"]
     end
 
-    subgraph TammiCloud [Tầng Máy chủ Tammi & Viettel Cloud]
-        TammiAPI["Tammi Backend REST API\n(https://api.tammi.vn/api/v1)"]
-        ZegoGateway["ZEGO ZIM WebSocket Gateway\n(AppID: 1090612485)"]
-        MediaCDN["Viettel CDN Media\n(*.vietteltammi.vn)"]
+    subgraph TammiCloud ["Tầng Máy Chủ Tammi và Viettel Cloud"]
+        TammiAPI["Tammi Backend REST API<br/>https://api.tammi.vn/api/v1"]
+        ZegoGateway["ZEGO ZIM WebSocket Gateway<br/>AppID: 1090612485"]
+        MediaCDN["Viettel CDN Media<br/>*.vietteltammi.vn"]
     end
 
-    ClientApp <-->|HTTP REST & SSE Events| LocalBridge
-    LocalBridge <-->|REST: Auth / Info / Token / Contacts| TammiAPI
+    ClientApp <--> |"HTTP REST và SSE Events"| LocalBridge
+    LocalBridge <--> |"REST: Auth, Info, Token, Contacts"| TammiAPI
     LocalBridge <--> ZimSDK
-    ZimSDK <-->|WebSocket nhị phân mã hoá: Chat / Realtime| ZegoGateway
-    LocalBridge -.->|Tải / Gửi file đa phương tiện| MediaCDN
+    ZimSDK <--> |"WebSocket nhị phân mã hoá: Chat, Realtime"| ZegoGateway
+    LocalBridge -.-> |"Tải hoặc gửi file đa phương tiện"| MediaCDN
     LocalBridge <--> CredStore
 ```
 

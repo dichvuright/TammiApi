@@ -11,12 +11,12 @@ SDK ZIM của Tammi được nhúng bên trong các bundle JavaScript của tran
 ```mermaid
 flowchart TD
     A["Tải index.html từ https://tammi.vn"] --> B["Tìm các file script: main-*.js và chunk-*.js"]
-    B --> C["Tải song song theo batch (8 file/lần)"]
-    C --> D{"Quét marker:\nwindow.ZIM||(window.ZIM="}
-    D -- Chưa thấy --> C
-    D -- Đã tìm thấy --> E["Trích xuất khối module bọc bởi esbuild"]
-    E --> F["Lấy ZEGO_APP_ID (1090612485)"]
-    F --> G["Đóng gói thành CommonJS module (.cjs)\nLưu vào ~/.hermes-tammi/sdk/zim-sdk.cjs"]
+    B --> C["Tải song song theo batch 8 file mỗi lần"]
+    C --> D{"Quét chuỗi nhận diện ZIM SDK"}
+    D -- "Chưa thấy" --> C
+    D -- "Đã tìm thấy" --> E["Trích xuất khối module bọc bởi esbuild"]
+    E --> F["Lấy ZEGO_APP_ID 1090612485"]
+    F --> G["Đóng gói thành CommonJS module (.cjs)<br/>Lưu vào ~/.hermes-tammi/sdk/zim-sdk.cjs"]
 ```
 
 ### Hỗ trợ Trích xuất từ file HAR (Trường hợp không có mạng hoặc mạng nội bộ):
@@ -75,12 +75,12 @@ Quy trình:
 
 ```mermaid
 flowchart LR
-    Login["Đăng nhập"] --> Save["Lưu credentials.json\n- Access Token (15 ngày)\n- Refresh Token (90 ngày)"]
+    Login["Đăng nhập"] --> Save["Lưu credentials.json<br/>- Access Token 15 ngày<br/>- Refresh Token 90 ngày"]
     Save --> Timer["Hẹn giờ kiểm tra mỗi 6 giờ"]
-    Timer --> Check{"Còn < 24 giờ\ntrước khi Access Token hết hạn?"}
-    Check -- Không --> Timer
-    Check -- Đúng --> Refresh["Gọi POST /auth/refresh-webapp-token\n(Kèm File Mutex Lock)"]
-    Refresh --> Rotate["Cập nhật Access Token mới\nvà Refresh Token mới vào file"]
+    Timer --> Check{"Thời gian còn lại ít hơn 24 giờ?"}
+    Check -- "Không" --> Timer
+    Check -- "Đúng" --> Refresh["Gọi POST /auth/refresh-webapp-token<br/>Kèm File Mutex Lock"]
+    Refresh --> Rotate["Cập nhật Access Token mới<br/>và Refresh Token mới vào file"]
     Rotate --> Timer
 ```
 
